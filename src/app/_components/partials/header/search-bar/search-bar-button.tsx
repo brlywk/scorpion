@@ -10,7 +10,7 @@ export default function SearchBarButton({
     return (
         <button
             onClick={clickHandler}
-            className="flex w-64 flex-row items-center justify-start gap-2 rounded-lg border border-gray-300 p-2 text-gray-300 hover:border-gray-500"
+            className="flex w-64 flex-row items-center justify-start gap-2 rounded-lg border border-gray-300 bg-white/75 p-2 text-gray-300 hover:border-gray-500"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

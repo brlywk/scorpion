@@ -14,7 +14,7 @@ export default function NavigationLink({
 }: NavigationLinkProps) {
     return (
         <Link href={to} className="group relative py-6">
-            <span className="rounded-lg px-4 py-2 transition-all group-hover:bg-gray-100">
+            <span className="rounded-lg px-4 py-2 transition-all group-hover:bg-black group-hover:text-white">
                 {label}
             </span>
             <div

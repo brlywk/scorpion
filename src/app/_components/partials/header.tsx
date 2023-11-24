@@ -37,7 +37,7 @@ export default function Header() {
         <header
             id="header"
             className={clsx(
-                "sticky left-0 top-0 flex flex-row items-center justify-between gap-8 border-b border-b-gray-300 bg-white/25 px-4 backdrop-blur transition-all",
+                "sticky left-0 top-0 flex flex-row items-center justify-between gap-8 border-b border-b-gray-300 bg-white/75 px-4 backdrop-blur transition-all",
                 scrolling && "shadow",
             )}
         >
