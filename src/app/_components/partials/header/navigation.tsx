@@ -22,7 +22,7 @@ export default function Navigation({ activeLink }: NavigationProps) {
     ];
 
     return (
-        <nav className="flex flex-row items-center justify-around gap-4">
+        <nav className="flex flex-grow flex-row items-center justify-center gap-4">
             {navLinks.map((link, index) => (
                 <NavigationLink
                     key={index}

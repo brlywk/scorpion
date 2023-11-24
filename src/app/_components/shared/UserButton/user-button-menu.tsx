@@ -1,20 +1,39 @@
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { forwardRef, type ElementRef } from "react";
 
 type UserButtonMenuProps = {
     userName: string;
+    userEmail: string;
+    userImage?: string | null;
 };
 
 const UserButtonMenu = forwardRef<ElementRef<"div">, UserButtonMenuProps>(
-    ({ userName }, ref) => {
+    ({ userName, userEmail, userImage }, ref) => {
         return (
             <div
                 className="absolute bottom-0 right-0 z-10 min-w-max translate-y-[105%] overflow-hidden rounded-lg border border-gray-300 bg-white shadow"
                 ref={ref}
             >
                 <div className="flex flex-col items-stretch divide-y divide-gray-300">
-                    <div className="p-4">Welcome, {userName}</div>
+                    <div className="flex flex-row items-center gap-4 p-4">
+                        {userImage && (
+                            <Image
+                                src={userImage}
+                                alt="User Profile Image"
+                                width={48}
+                                height={48}
+                                className="h-8 w-8 rounded-full"
+                            />
+                        )}
+                        <div className="flex flex-col">
+                            <span className="font-bold">{userName}</span>
+                            {userEmail && (
+                                <span className="text-xs">{userEmail}</span>
+                            )}
+                        </div>
+                    </div>
                     <div className="p-2">
                         <Link
                             href="/preferences"

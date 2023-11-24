@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import Navigation from "./header/navigation";
 import UserButton from "../shared/UserButton/user-button";
+import SearchBar from "./header/search-bar/search-bar";
 
 export default function Header() {
     const scrollOffset = 42;
@@ -46,6 +47,7 @@ export default function Header() {
                 alt="Project Scorpion Logo"
             />
             <Navigation activeLink={currentPath} />
+            <SearchBar />
             <UserButton />
         </header>
     );

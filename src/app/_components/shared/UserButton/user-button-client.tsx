@@ -58,7 +58,12 @@ export default function UserButtonClient() {
                 {!data.user.image && <UserButtonFallback />}
             </button>
             {open && (
-                <UserButtonMenu ref={menuRef} userName={data.user.name ?? ""} />
+                <UserButtonMenu
+                    ref={menuRef}
+                    userName={data.user.name ?? ""}
+                    userEmail={data.user.email ?? ""}
+                    userImage={data.user.image}
+                />
             )}
         </div>
     );
