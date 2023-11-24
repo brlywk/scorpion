@@ -1,5 +1,5 @@
+import Heading from "~/app/_components/shared/heading";
 import type { SelectExpense } from "~/server/db/schema";
-import Heading from "../shared/heading";
 
 type ExpenseCardProps = {
     expense: SelectExpense;

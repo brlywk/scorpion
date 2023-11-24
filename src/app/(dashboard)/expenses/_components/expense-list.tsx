@@ -11,6 +11,11 @@ export default async function ExpenseList() {
     return (
         <div className="flex w-full flex-col gap-8">
             {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
+            {/* TODO: DELETE */}
+            {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
+            {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
+            {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
+            {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
         </div>
     );
 }

@@ -9,9 +9,7 @@ export default async function DashboardLayout({
     return (
         <>
             <Header />
-            <main className="mt-12 flex w-full justify-center">
-                <div className="flex w-3/4 justify-center">{children}</div>
-            </main>
+            <main>{children}</main>
             <Footer />
         </>
     );

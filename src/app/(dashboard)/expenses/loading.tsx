@@ -1,5 +1,5 @@
 import Loading from "~/app/_components/shared/loading";
 
-export default async function LoadingDashboard() {
+export default function LoadingExpensesPage() {
     return <Loading />;
 }

@@ -17,7 +17,7 @@ export default function Heading({
 
     const classes = clsx(
         "font-bold",
-        "my-8",
+        "mb-8",
         {
             "text-4xl": level === 1,
             "text-2xl": level === 2,

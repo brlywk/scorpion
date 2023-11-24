@@ -1,3 +1,11 @@
+import Heading from "~/app/_components/shared/heading";
+import ExpenseList from "./_components/expense-list";
+
 export default async function ExpensesPage() {
-    return <div>Welcome to the expenses page</div>;
+    return (
+        <div>
+            <Heading>Expenses</Heading>
+            <ExpenseList />
+        </div>
+    );
 }
