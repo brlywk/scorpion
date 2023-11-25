@@ -7,11 +7,9 @@ export default async function ExpensesLayout({
 }) {
     return (
         <>
-            <div className="relative mx-auto mt-8 flex max-w-screen-xl flex-row gap-8">
+            <div className="relative flex flex-row gap-8">
                 <ExpensesSubNavigation />
-                <div className="min-h-[calc(100vh-105px)] w-full">
-                    {children}
-                </div>
+                <div className="w-full">{children}</div>
             </div>
         </>
     );

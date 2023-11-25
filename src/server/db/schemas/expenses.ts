@@ -40,12 +40,36 @@ export const expenseRelations = relations(expenses, ({ one }) => ({
 }));
 
 // infer types
+// NOTE: numberRegex is needed to accomodate for both dot (.) and comma (,) as decimal separator
+// WARN: If people get smart and enter 'one thousand' as 1,000 or 1.000 they will lead a pretty
+// cheap life in this here application 😁
 const numberRegex = /^(?:\d+(?:[.,]\d+)?)|(?:\d+(?::\d+)?)$/;
 export const expensesInsertSchema = createInsertSchema(expenses, {
-    // NOTE: for inserts, we need to make some values optional, as we will
-    // either get them from our context or are automatically set by the DB
+    // NOTE: We need to do some additional validation to make sure the data we insert
+    // is what we expect it to be...
     userId: (schema) => schema.userId.optional(),
-    price: (schema) => schema.price.regex(numberRegex),
+    price: (schema) =>
+        schema.price.regex(numberRegex).superRefine((val, ctx) => {
+            const asNumber = parseInt(val);
+            if (isNaN(asNumber)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "Not a number",
+                });
+            }
+
+            if (asNumber < 0) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.too_small,
+                    minimum: 0,
+                    inclusive: true,
+                    type: "number",
+                    message: "Must be 0 or more",
+                });
+            }
+        }),
+    // 'notNull' rejecting null but allowing "" is conceptiually correct but useless in practice...
+    name: (schema) => schema.name.trim().min(1),
 });
 export const expensesSelectSchema = createSelectSchema(expenses);
 

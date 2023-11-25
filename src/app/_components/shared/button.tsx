@@ -5,44 +5,58 @@ import type { MouseEventHandler } from "react";
 interface BaseButton {
     classMod?: string;
     bold?: boolean;
-    type?: "default" | "confirm" | "warning" | "inverted";
+    theme?: "default" | "confirm" | "warning" | "danger" | "inverted";
+    children: React.ReactNode;
 }
 
 interface LinkButton extends BaseButton {
     action: string;
-    children: React.ReactNode;
 }
 
 interface ClickButton extends BaseButton {
     action: MouseEventHandler;
-    children: React.ReactNode;
 }
 
-type ButtonProps<T extends string | MouseEventHandler> = T extends string
-    ? LinkButton
-    : ClickButton;
+interface SubmitButton extends BaseButton {
+    action?: never;
+    type: "submit" | "reset";
+}
 
-export default function Button<T extends string | MouseEventHandler>({
-    action,
-    classMod,
-    bold = false,
-    type = "default",
-    children,
-}: ButtonProps<T>) {
+type ButtonProps<T extends string | MouseEventHandler | null> = T extends string
+    ? LinkButton
+    : T extends MouseEventHandler
+      ? ClickButton
+      : SubmitButton;
+
+// Overcomplicated?! This? Noooooooo...
+export default function Button<T extends string | MouseEventHandler | null>(
+    props: ButtonProps<T>,
+) {
+    const {
+        action,
+        classMod,
+        bold = false,
+        theme = "default",
+        children,
+    } = props;
+
     const classes = clsx(
         "rounded-lg p-2 transition-all",
         bold && "font-bold",
         {
-            "text-black hover:bg-gray-300": type === "default",
+            "text-black hover:bg-gray-100": theme === "default",
             "text-green-400 hover:bg-green-400 hover:text-white":
-                type === "confirm",
+                theme === "confirm",
             "text-red-400 hover:bg-red-400 hover:text-white":
-                type === "warning",
-            "text-black hover:bg-black hover:text-white": type === "inverted",
+                theme === "danger",
+            "text-amber-400 hover:bg-amber-400 hover:text-white":
+                theme === "warning",
+            "text-black hover:bg-black hover:text-white": theme === "inverted",
         },
         classMod,
     );
 
+    // LinkButton
     if (typeof action === "string")
         return (
             <Link href={action} className={classes}>
@@ -50,8 +64,18 @@ export default function Button<T extends string | MouseEventHandler>({
             </Link>
         );
 
+    // ClickButton
+    if (typeof action === "function")
+        return (
+            <button onClick={action} className={classes}>
+                {children}
+            </button>
+        );
+
+    // SubmitButton
+    const { type } = props;
     return (
-        <button onClick={action} className={classes}>
+        <button className={classes} type={type}>
             {children}
         </button>
     );

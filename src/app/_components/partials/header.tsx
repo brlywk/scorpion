@@ -1,11 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Logo from "./header/logo";
-import { useEffect, useState } from "react";
 import clsx from "clsx";
-import Navigation from "./header/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import UserButton from "../shared/UserButton/user-button";
+import Logo from "./header/logo";
+import Navigation from "./header/navigation";
 import SearchBar from "./header/search-bar/search-bar";
 
 export default function Header() {
@@ -37,18 +37,20 @@ export default function Header() {
         <header
             id="header"
             className={clsx(
-                "sticky left-0 top-0 z-10 flex flex-row items-center justify-between gap-8 border-b border-b-gray-300 bg-white/75 px-4 backdrop-blur transition-all",
+                "sticky left-0 top-0 z-10 border-b border-b-gray-300 bg-white/75 backdrop-blur transition-all",
                 scrolling && "shadow",
             )}
         >
-            <Logo
-                label="Project Scorpion"
-                linkTo={currentPath === "/" ? "/" : "/dashboard"}
-                alt="Project Scorpion Logo"
-            />
-            <Navigation activeLink={currentPath} />
-            <SearchBar />
-            <UserButton />
+            <div className="mx-auto flex max-w-screen-xl flex-row items-center justify-between gap-8">
+                <Logo
+                    label="Project Scorpion"
+                    linkTo={currentPath === "/" ? "/" : "/dashboard"}
+                    alt="Project Scorpion Logo"
+                />
+                <Navigation activeLink={currentPath} />
+                <SearchBar />
+                <UserButton />
+            </div>
         </header>
     );
 }

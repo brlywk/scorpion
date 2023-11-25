@@ -11,7 +11,7 @@ export default function Logo({ label, linkTo, alt }: LogoProps) {
     const imageUrl = "/temp_logo.svg";
 
     return (
-        <Link href={linkTo} className="flex flex-row items-center gap-2 p-4">
+        <Link href={linkTo} className="flex flex-row items-center gap-2 py-4">
             <Image
                 src={imageUrl}
                 alt={alt ?? "Website Logo"}

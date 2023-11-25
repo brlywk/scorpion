@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-import ExpenseList from "~/app/_components/expenses/expense-list";
 import { getServerAuthSession } from "~/server/auth";
 
 export const metadata = {
@@ -9,14 +7,10 @@ export const metadata = {
 export default async function DashboardPage() {
     const session = await getServerAuthSession();
 
-    if (!session) {
-        redirect("/redirect");
-    }
-
     return (
         <div className="flex w-full flex-col gap-4">
             <div>
-                Hello there, {session.user.name}, welcome to the Dashboard
+                Hello there, {session?.user.name}, welcome to the Dashboard
             </div>
             <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea

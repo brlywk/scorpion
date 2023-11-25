@@ -28,7 +28,7 @@ export default function Navigation({ activeLink }: NavigationProps) {
                     key={index}
                     label={link.label}
                     to={link.to}
-                    active={activeLink === link.to}
+                    active={activeLink.includes(link.to)}
                 />
             ))}
         </nav>
