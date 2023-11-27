@@ -76,3 +76,16 @@ export const expensesSelectSchema = createSelectSchema(expenses);
 // typescript type for easier... stuff...
 export type InsertExpense = z.infer<typeof expensesInsertSchema>;
 export type SelectExpense = z.infer<typeof expensesSelectSchema>;
+
+// other usefull stuff
+export type BillingCycle = NonNullable<
+    z.infer<typeof expensesSelectSchema.shape.billingCycle>
+>;
+export type Currency = NonNullable<
+    z.infer<typeof expensesSelectSchema.shape.currency>
+>;
+
+export const allowedBillingCycles =
+    expensesSelectSchema.shape.billingCycle._def.innerType._def.values;
+export const allowedCurrencies =
+    expensesSelectSchema.shape.billingCycle._def.innerType._def.values;

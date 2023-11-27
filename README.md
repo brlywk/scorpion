@@ -1,3 +1,3 @@
-# Project Scorpion
+# Scorpion
 
 🦂

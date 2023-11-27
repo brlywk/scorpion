@@ -2,6 +2,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import type { MouseEventHandler } from "react";
 
+// NOTE: Yes, this would have been way easier with less code if just split up
+// into three different Button components, but let's play around with TypeScript
+// a little bit...
+
 interface BaseButton {
     classMod?: string;
     bold?: boolean;
