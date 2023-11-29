@@ -11,6 +11,9 @@ export const expensesRouter = createTRPCRouter({
             await ctx.db.insert(expenses).values({
                 name: input.name,
                 price: input.price,
+                currency: input.currency,
+                billingCycle: input.billingCycle,
+                categoryId: input.categoryId,
                 userId: ctx.session.user.id,
             });
         }),

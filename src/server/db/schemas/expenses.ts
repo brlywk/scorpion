@@ -26,7 +26,7 @@ export const expenses = mysqlTable("expense", {
     billingCycle: mysqlEnum("billing_cycle", ["monthly", "yearly"]).default(
         "monthly",
     ),
-    categoryId: varchar("category_id", { length: 255 }).default("1"),
+    categoryId: bigint("category_id", { mode: "number" }).default(1),
     created: timestamp("created").onUpdateNow(),
 });
 
@@ -88,4 +88,4 @@ export type Currency = NonNullable<
 export const allowedBillingCycles =
     expensesSelectSchema.shape.billingCycle._def.innerType._def.values;
 export const allowedCurrencies =
-    expensesSelectSchema.shape.billingCycle._def.innerType._def.values;
+    expensesSelectSchema.shape.currency._def.innerType._def.values;

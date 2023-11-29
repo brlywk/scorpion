@@ -19,10 +19,12 @@ interface LinkButton extends BaseButton {
 
 interface ClickButton extends BaseButton {
     action: MouseEventHandler;
+    disabled?: boolean;
 }
 
 interface SubmitButton extends BaseButton {
     action?: never;
+    disabled?: boolean;
     type: "submit" | "reset";
 }
 
@@ -69,9 +71,10 @@ export default function Button<T extends string | MouseEventHandler | null>(
         );
 
     // ClickButton
+    const { disabled = false } = props;
     if (typeof action === "function")
         return (
-            <button onClick={action} className={classes}>
+            <button onClick={action} className={classes} disabled={disabled}>
                 {children}
             </button>
         );
@@ -79,7 +82,7 @@ export default function Button<T extends string | MouseEventHandler | null>(
     // SubmitButton
     const { type } = props;
     return (
-        <button className={classes} type={type}>
+        <button className={classes} type={type} disabled={disabled}>
             {children}
         </button>
     );
