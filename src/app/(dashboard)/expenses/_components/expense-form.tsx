@@ -11,6 +11,7 @@ import { type SelectCategory, expensesInsertSchema } from "~/server/db/schema";
 import { api } from "~/trpc/react";
 import { capitalize, getCurrencySymbol } from "~/utils/displayTransformers";
 import { CategoryDropdown, Dropdown } from "./form-dropdown";
+import { useNotificationStore } from "~/stores/useNotificationstore";
 
 type ExpenseFormProps = {
     categories: SelectCategory[];
@@ -25,9 +26,23 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
         formState: { errors },
     } = methods;
 
+    // notifications
+    const { addNotification } = useNotificationStore();
+
     // create api client to submit data
     const createExpense = api.expenses.create.useMutation({
-        onSuccess: () => reset(),
+        onSuccess: () => {
+            reset();
+            addNotification({
+                message: "Expense created successfully",
+                type: "success",
+            });
+        },
+        onError: () =>
+            addNotification({
+                message: "Something went wrong creating your expense",
+                type: "danger",
+            }),
     });
 
     // handle form submission
@@ -69,7 +84,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                     <Input
                         name="price"
                         register={register}
-                        type="number"
+                        type="text"
                         hasError={Object.hasOwn(errors, "price")}
                         classMod="flex-grow"
                         required

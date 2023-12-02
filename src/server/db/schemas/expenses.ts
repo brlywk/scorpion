@@ -50,25 +50,28 @@ export const expensesInsertSchema = createInsertSchema(expenses, {
     // is what we expect it to be...
     userId: (schema) => schema.userId.optional(),
     price: (schema) =>
-        schema.price.regex(numberRegex).superRefine((val, ctx) => {
-            const asNumber = parseInt(val);
-            if (isNaN(asNumber)) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    message: "Not a number",
-                });
-            }
+        schema.price
+            .regex(numberRegex)
+            .transform((val) => val.replaceAll(",", "."))
+            .superRefine((val, ctx) => {
+                const asNumber = parseInt(val);
+                if (isNaN(asNumber)) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        message: "Not a number",
+                    });
+                }
 
-            if (asNumber < 0) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.too_small,
-                    minimum: 0,
-                    inclusive: true,
-                    type: "number",
-                    message: "Must be 0 or more",
-                });
-            }
-        }),
+                if (asNumber < 0) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.too_small,
+                        minimum: 0,
+                        inclusive: true,
+                        type: "number",
+                        message: "Must be 0 or more",
+                    });
+                }
+            }),
     // 'notNull' rejecting null but allowing "" is conceptiually correct but useless in practice...
     name: (schema) => schema.name.trim().min(1),
 });
