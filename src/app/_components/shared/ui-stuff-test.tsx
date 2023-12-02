@@ -1,8 +1,11 @@
 "use client";
 
-import { useNotificationStore } from "~/stores/useNotificationstore";
-import Heading from "./heading";
 import { useRef } from "react";
+import {
+    UiNotification,
+    useNotificationStore,
+} from "~/stores/useNotificationstore";
+import Heading from "./heading";
 
 export default function UiStuffTestAndSomeSuch() {
     const { addNotification, dismissNotification, dismissAllNotifications } =
@@ -10,13 +13,13 @@ export default function UiStuffTestAndSomeSuch() {
 
     const notificationRef = useRef<React.ElementRef<"input">>(null);
 
-    function addNewNotificationTest() {
+    function addNewNotificationTest(type: UiNotification["type"]) {
         if (!notificationRef.current) return;
 
         addNotification({
             message:
                 notificationRef.current.value || "OMG YOU FORGOT A MESSAGE...",
-            type: "info",
+            type,
         });
         notificationRef.current.value = "";
         notificationRef.current.focus();
@@ -33,7 +36,9 @@ export default function UiStuffTestAndSomeSuch() {
                 placeholder="Notification test message"
             />
             <div className="flex flex-row gap-8">
-                <button onClick={addNewNotificationTest}>Add!</button>
+                <button onClick={() => addNewNotificationTest("danger")}>
+                    Add!
+                </button>
                 <button onClick={dismissNotification}>Dismiss oldest</button>
                 <button onClick={dismissAllNotifications}>Dismiss all</button>
             </div>

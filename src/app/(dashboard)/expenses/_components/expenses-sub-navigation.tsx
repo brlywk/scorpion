@@ -1,4 +1,6 @@
+import Link from "next/link";
 import Button from "~/app/_components/shared/button";
+import { CategoryCard } from "~/app/_components/shared/category-card";
 import { api } from "~/trpc/server";
 
 export default async function ExpensesSubNavigation() {
@@ -48,10 +50,14 @@ export default async function ExpensesSubNavigation() {
 
             <hr />
 
-            <div>
-                <b>Categories</b>
+            <div className="flex flex-col gap-2">
                 {categories.map((c) => (
-                    <div>{c.name}</div>
+                    <Link
+                        href={`/categories/${c.id}`}
+                        className="rounded-lg p-2 transition-all hover:bg-gray-100"
+                    >
+                        <CategoryCard category={c} key={c.id} />
+                    </Link>
                 ))}
             </div>
         </aside>

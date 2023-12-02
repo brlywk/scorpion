@@ -1,11 +1,11 @@
 import "~/styles/globals.css";
 
-import { Noto_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
-const defaultFont = Noto_Sans({
+const defaultFont = Poppins({
     subsets: ["latin"],
     weight: ["400", "700"],
 });
@@ -13,7 +13,7 @@ const defaultFont = Noto_Sans({
 export const metadata = {
     title: "Project Scorpion 🦂",
     description: "Come over here!",
-    icons: [{ rel: "icon", url: "/favicon.svg" }],
+    icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({

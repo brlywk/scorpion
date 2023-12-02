@@ -1,19 +1,19 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Notification = {
+export type UiNotification = {
     message: string;
     type: "info" | "success" | "warn" | "danger";
 };
 
-export interface NotificationState {
-    notifications: Notification[];
-    addNotification: (newNotification: Notification) => void;
+export interface UiNotificationState {
+    notifications: UiNotification[];
+    addNotification: (newNotification: UiNotification) => void;
     dismissNotification: () => void;
     dismissAllNotifications: () => void;
 }
 
-export const useNotificationStore = create<NotificationState>()(
+export const useNotificationStore = create<UiNotificationState>()(
     persist(
         (set, get) => ({
             notifications: [],

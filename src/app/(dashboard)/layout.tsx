@@ -2,6 +2,7 @@ import { getServerAuthSession } from "~/server/auth";
 import Footer from "../_components/partials/footer";
 import Header from "../_components/partials/header";
 import { redirect } from "next/navigation";
+import NotificiationPopup from "../_components/shared/notification-popup";
 
 export default async function DashboardLayout({
     children,
@@ -19,6 +20,7 @@ export default async function DashboardLayout({
             <Header />
             <main className="mx-auto max-w-screen-xl pt-14">{children}</main>
             <Footer />
+            <NotificiationPopup />
         </>
     );
 }
