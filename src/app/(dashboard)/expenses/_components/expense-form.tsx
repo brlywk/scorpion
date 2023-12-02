@@ -6,12 +6,8 @@ import Button from "~/app/_components/shared/button";
 import FormError from "~/app/_components/shared/forms/form-error-message";
 import Input from "~/app/_components/shared/forms/form-input";
 import Label from "~/app/_components/shared/forms/form-label";
-import {
-    SelectCategory,
-    allowedBillingCycles,
-    allowedCurrencies,
-    expensesInsertSchema,
-} from "~/server/db/schema";
+import { allowedBillingCycles, allowedCurrencies } from "~/server/db/baseInfo";
+import { type SelectCategory, expensesInsertSchema } from "~/server/db/schema";
 import { api } from "~/trpc/react";
 import { capitalize, getCurrencySymbol } from "~/utils/displayTransformers";
 import { CategoryDropdown, Dropdown } from "./form-dropdown";
@@ -80,7 +76,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                     />
                     <Dropdown
                         name="currency"
-                        options={allowedCurrencies as string[]}
+                        options={allowedCurrencies}
                         displayTransformer={
                             getCurrencySymbol as (value: string) => string
                         }

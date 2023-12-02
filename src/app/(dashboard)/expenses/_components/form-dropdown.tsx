@@ -1,16 +1,16 @@
 import clsx from "clsx";
 import Image from "next/image";
 import {
-    ElementRef,
-    MouseEventHandler,
-    ReactNode,
     forwardRef,
     useEffect,
     useRef,
     useState,
+    type ElementRef,
+    type MouseEventHandler,
+    type ReactNode,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Currency, SelectCategory } from "~/server/db/schema";
+import type { SelectCategory } from "~/server/db/schema";
 import { findCategoryById } from "~/utils/formHelpers";
 
 interface BaseDropdown {
@@ -21,7 +21,7 @@ interface BaseDropdown {
 }
 
 type StringDropdownProps = BaseDropdown & {
-    options: string[];
+    options: Readonly<string[]>;
     classMod?: string;
     defaultValue?: string;
 };
@@ -41,7 +41,7 @@ export function Dropdown({
     widthClass,
     heightClass,
 }: StringDropdownProps) {
-    if (options.length === 0) return null;
+    if (options?.length === 0) return null;
 
     const { control } = useFormContext();
     const [menuOpen, setMenuOpen] = useState(false);

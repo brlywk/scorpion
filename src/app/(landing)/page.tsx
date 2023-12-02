@@ -5,7 +5,7 @@ import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import Heading from "../_components/shared/heading";
-import UserButton from "../_components/shared/UserButton/user-button";
+import UserButton from "../_components/shared/user-button/user-button";
 
 export default async function Home() {
     const session = await getServerAuthSession();

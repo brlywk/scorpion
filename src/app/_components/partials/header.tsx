@@ -3,10 +3,10 @@
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import UserButton from "../shared/UserButton/user-button";
 import Logo from "./header/logo";
 import Navigation from "./header/navigation";
 import SearchBar from "./header/search-bar/search-bar";
+import UserButton from "../shared/user-button/user-button";
 
 export default function Header() {
     const scrollOffset = 42;

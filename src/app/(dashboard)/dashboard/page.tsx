@@ -1,3 +1,5 @@
+import NotificiationPopup from "~/app/_components/shared/notification-popup";
+import UiStuffTestAndSomeSuch from "~/app/_components/shared/ui-stuff-test";
 import { getServerAuthSession } from "~/server/auth";
 
 export const metadata = {
@@ -12,6 +14,8 @@ export default async function DashboardPage() {
             <div>
                 Hello there, {session?.user.name}, welcome to the Dashboard
             </div>
+            <UiStuffTestAndSomeSuch />
+            <NotificiationPopup />
             <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea
                 aperiam hic, asperiores nostrum laboriosam quasi, eveniet odit

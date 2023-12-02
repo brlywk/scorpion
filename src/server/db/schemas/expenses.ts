@@ -11,6 +11,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { categories } from "./categories";
 import { users } from "./nextauth";
 import { z } from "zod";
+import { allowedBillingCycles, allowedCurrencies } from "../baseInfo";
 
 // NOTE: Webpack has issues importing this from another file, so put this
 // into every schema file!
@@ -22,8 +23,8 @@ export const expenses = mysqlTable("expense", {
     name: varchar("name", { length: 255 }).notNull(),
     image: varchar("image", { length: 255 }),
     price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-    currency: mysqlEnum("currency", ["eur", "usd"]).default("eur"),
-    billingCycle: mysqlEnum("billing_cycle", ["monthly", "yearly"]).default(
+    currency: mysqlEnum("currency", allowedCurrencies).default("eur"),
+    billingCycle: mysqlEnum("billing_cycle", allowedBillingCycles).default(
         "monthly",
     ),
     categoryId: bigint("category_id", { mode: "number" }).default(1),
@@ -84,8 +85,3 @@ export type BillingCycle = NonNullable<
 export type Currency = NonNullable<
     z.infer<typeof expensesSelectSchema.shape.currency>
 >;
-
-export const allowedBillingCycles =
-    expensesSelectSchema.shape.billingCycle._def.innerType._def.values;
-export const allowedCurrencies =
-    expensesSelectSchema.shape.currency._def.innerType._def.values;
