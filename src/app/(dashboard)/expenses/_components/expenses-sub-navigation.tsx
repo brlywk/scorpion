@@ -53,6 +53,7 @@ export default async function ExpensesSubNavigation() {
             <div className="flex flex-col gap-2">
                 {categories.map((c) => (
                     <Link
+                        key={c.id}
                         href={`/categories/${c.id}`}
                         className="rounded-lg p-2 transition-all hover:bg-gray-100"
                     >

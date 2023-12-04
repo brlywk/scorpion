@@ -17,6 +17,7 @@ interface BaseDropdown {
     name: string;
     widthClass?: string;
     heightClass?: string;
+    twoColumn?: boolean;
     displayTransformer?: (value: string) => string;
 }
 
@@ -40,6 +41,7 @@ export function Dropdown({
     classMod,
     widthClass,
     heightClass,
+    twoColumn = false,
 }: StringDropdownProps) {
     if (options?.length === 0) return null;
 
@@ -100,6 +102,7 @@ export function Dropdown({
                             open={menuOpen}
                             widthClass={widthClass}
                             ref={menuRef}
+                            twoColumn={twoColumn}
                         >
                             {options.map((opt, idx) => (
                                 <DropdownMenuEntry
@@ -129,6 +132,7 @@ export function CategoryDropdown({
     defaultValueId,
     widthClass,
     heightClass,
+    twoColumn = false,
 }: CategoryDropdownProps) {
     if (options.length === 0) return null;
     const initialCategory = findCategoryById(defaultValueId, options);
@@ -208,6 +212,7 @@ export function CategoryDropdown({
                             open={menuOpen}
                             widthClass="w-full"
                             ref={menuRef}
+                            twoColumn={twoColumn}
                         >
                             {options.map((opt) => (
                                 <DropdownMenuEntry
@@ -277,17 +282,20 @@ type DropdownMenuProps = {
     open: boolean;
     widthClass?: string;
     children: ReactNode;
+    twoColumn?: boolean;
 };
 
 const DropdownMenu = forwardRef<ElementRef<"div">, DropdownMenuProps>(
-    ({ open, widthClass, children }, menuRef) => {
+    ({ open, widthClass, twoColumn = false, children }, menuRef) => {
         return (
             <>
                 {open && (
                     <div
                         className={clsx(
-                            "absolute left-0 top-0 z-10 flex flex-col items-center gap-2 rounded-lg border border-gray-500 bg-white p-1 shadow",
+                            "absolute left-0 top-0 z-10 items-center gap-2 rounded-lg border border-gray-500 bg-white p-1 shadow",
                             widthClass,
+                            twoColumn && "columns-2",
+                            !twoColumn && "flex flex-col",
                         )}
                         ref={menuRef}
                     >

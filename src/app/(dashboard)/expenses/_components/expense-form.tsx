@@ -126,6 +126,7 @@ export default function ExpenseForm({
                     options={categories}
                     defaultValueId={expense?.categoryId ?? 1}
                     displayTransformer={capitalize}
+                    twoColumn
                 />
                 <FormError
                     name="categoryId"
