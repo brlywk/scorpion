@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Heading from "~/app/_components/shared/heading";
 import type { SelectExpense } from "~/server/db/schema";
 
@@ -16,6 +17,7 @@ export default async function ExpenseCard({ expense }: ExpenseCardProps) {
             </span>
             <span>{expense.billingCycle}</span>
             <span>{expense.created?.toISOString()}</span>
+            <Link href={`/expenses/edit/${expense.id}`}>Edit</Link>
         </div>
     );
 }

@@ -1,65 +1,49 @@
-"use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, type FieldValues } from "react-hook-form";
+import {
+    FormProvider,
+    type FieldValues,
+    type UseFormReturn,
+} from "react-hook-form";
 import Button from "~/app/_components/shared/button";
 import FormError from "~/app/_components/shared/forms/form-error-message";
 import Input from "~/app/_components/shared/forms/form-input";
 import Label from "~/app/_components/shared/forms/form-label";
 import { allowedBillingCycles, allowedCurrencies } from "~/server/db/baseInfo";
-import { type SelectCategory, expensesInsertSchema } from "~/server/db/schema";
-import { api } from "~/trpc/react";
+import {
+    type SelectExpense,
+    type SelectCategory,
+    expenses,
+} from "~/server/db/schema";
 import { capitalize, getCurrencySymbol } from "~/utils/displayTransformers";
 import { CategoryDropdown, Dropdown } from "./form-dropdown";
-import { useNotificationStore } from "~/stores/useNotificationstore";
 
-type ExpenseFormProps = {
+export type ExpenseFormProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    formMethods: UseFormReturn<FieldValues, any, undefined>;
+    submitHandler: (data: FieldValues) => void;
+    isSubmitting: boolean;
     categories: SelectCategory[];
+    expense?: SelectExpense;
 };
 
-export default function ExpenseForm({ categories }: ExpenseFormProps) {
-    const methods = useForm({ resolver: zodResolver(expensesInsertSchema) });
+export default function ExpenseForm({
+    formMethods,
+    submitHandler,
+    isSubmitting,
+    categories,
+    expense,
+}: ExpenseFormProps) {
     const {
         register,
-        reset,
         handleSubmit,
         formState: { errors },
-    } = methods;
+    } = formMethods;
 
-    // notifications
-    const { addNotification } = useNotificationStore();
-
-    // create api client to submit data
-    const createExpense = api.expenses.create.useMutation({
-        onSuccess: () => {
-            reset();
-            addNotification({
-                message: "Expense created successfully",
-                type: "success",
-            });
-        },
-        onError: () =>
-            addNotification({
-                message: "Something went wrong creating your expense",
-                type: "danger",
-            }),
-    });
-
-    // handle form submission
-    function onSubmit(data: FieldValues) {
-        console.log("Submitted");
-        console.log("Data", data);
-
-        const unsafeExpense = expensesInsertSchema.safeParse(data);
-        if (!unsafeExpense.success) return;
-
-        createExpense.mutate(unsafeExpense.data);
-    }
+    const submitButtonLabel = expense ? "Save" : "Submit";
 
     return (
-        <FormProvider {...methods}>
+        <FormProvider {...formMethods}>
             <form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(submitHandler)}
                 className="grid w-4/5 grid-cols-[max-content_1fr] items-center gap-4"
             >
                 {/* Name */}
@@ -69,6 +53,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                     register={register}
                     type="text"
                     hasError={Object.hasOwn(errors, "name")}
+                    defaultValue={expense?.name ?? ""}
                     autoFocus
                     required
                 />
@@ -86,6 +71,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                         register={register}
                         type="text"
                         hasError={Object.hasOwn(errors, "price")}
+                        defaultValue={expense?.price ?? ""}
                         classMod="flex-grow"
                         required
                     />
@@ -94,6 +80,10 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                         options={allowedCurrencies}
                         displayTransformer={
                             getCurrencySymbol as (value: string) => string
+                        }
+                        defaultValue={
+                            expense?.currency ??
+                            (allowedCurrencies[0] as string)
                         }
                         heightClass="h-[42px]"
                         widthClass="w-[42px]"
@@ -117,6 +107,10 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                     name="billingCycle"
                     options={allowedBillingCycles}
                     displayTransformer={capitalize}
+                    defaultValue={
+                        expense?.billingCycle ??
+                        (allowedBillingCycles[0] as string)
+                    }
                     widthClass="w-full"
                 />
                 <FormError
@@ -130,7 +124,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                 <CategoryDropdown
                     name="categoryId"
                     options={categories}
-                    defaultValueId={1}
+                    defaultValueId={expense?.categoryId ?? 1}
                     displayTransformer={capitalize}
                 />
                 <FormError
@@ -140,8 +134,8 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
                 />
 
                 <div className="col-span-2 grid grid-cols-2 gap-4">
-                    <Button type="submit" disabled={createExpense.isLoading}>
-                        {createExpense.isLoading ? "Submitting..." : "Submit"}
+                    <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Submitting..." : submitButtonLabel}
                     </Button>
                     <Button type="reset" theme="warning">
                         Reset

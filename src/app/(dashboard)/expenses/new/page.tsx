@@ -1,6 +1,6 @@
 import Heading from "~/app/_components/shared/heading";
 import { api } from "~/trpc/server";
-import ExpenseForm from "../_components/expense-form";
+import AddExpenseForm from "../_components/add-expense-form";
 
 export default async function NewExpensePage() {
     // TODO: THIS SHOULD CHANGE ONCE USERS ARE ALLOWED TO SPECIFY THEIR OWN CATEGORIES
@@ -9,7 +9,7 @@ export default async function NewExpensePage() {
     return (
         <div className="flex w-4/5 flex-col items-center">
             <Heading>New Expense</Heading>
-            <ExpenseForm categories={categories} />
+            <AddExpenseForm categories={categories} />
         </div>
     );
 }

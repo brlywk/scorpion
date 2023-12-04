@@ -16,7 +16,7 @@ export default function Loading({ size = 12 }: { size?: number }) {
                         y1="5.271%"
                         y2="91.793%"
                     >
-                        <stop offset="0%" stop-color="currentColor" />
+                        <stop offset="0%" stopColor="currentColor" />
                         <stop
                             offset="100%"
                             stopColor="currentColor"
