@@ -78,6 +78,7 @@ export function Dropdown({
             render={({ field: { value, onChange, ref } }) => (
                 <>
                     <input
+                        id={name}
                         type="hidden"
                         name={name}
                         value={value as string}
@@ -173,6 +174,7 @@ export function CategoryDropdown({
                 <>
                     <input
                         type="hidden"
+                        id={name}
                         name={name}
                         value={value as string}
                         ref={ref}
