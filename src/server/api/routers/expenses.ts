@@ -53,6 +53,9 @@ export const expensesRouter = createTRPCRouter({
     getAll: protectedProcedure.query(async ({ ctx }) => {
         // TODO: Slow down request for testing
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        return ctx.db.select().from(expenses);
+        return ctx.db
+            .select()
+            .from(expenses)
+            .where(eq(expenses.userId, ctx.session.user.id));
     }),
 });

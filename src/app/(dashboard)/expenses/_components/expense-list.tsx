@@ -6,11 +6,18 @@ export default async function ExpenseList() {
     const session = await getServerAuthSession();
     if (!session?.user) return null;
 
-    const allExpenses = await api.expenses.getAll.query();
+    const userExpenses = await api.expenses.getAll.query();
+    const userCategories = await api.categories.getUserCatgories.query();
 
     return (
         <div className="flex w-full flex-col gap-8">
-            {allExpenses?.map((e) => <ExpenseCard key={e.id} expense={e} />)}
+            {userExpenses?.map((e) => (
+                <ExpenseCard
+                    key={e.id}
+                    expense={e}
+                    category={userCategories.get(e.categoryId ?? 1)!}
+                />
+            ))}
         </div>
     );
 }

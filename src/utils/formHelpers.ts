@@ -1,4 +1,4 @@
-import { SelectCategory } from "~/server/db/schema";
+import type { SelectCategory } from "~/server/db/schema";
 
 /**
  * Finds a category by ID and returns it.

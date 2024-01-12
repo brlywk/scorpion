@@ -1,4 +1,4 @@
-import { Currency } from "~/server/db/schema";
+import type { Currency } from "~/server/db/schema";
 
 /**
  * Capitalizes a string

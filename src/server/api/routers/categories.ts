@@ -1,7 +1,9 @@
-import { categories } from "~/server/db/schema";
+import { SelectCategory, categories, expenses } from "~/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
+import { expensesRouter } from "./expenses";
+import { api } from "~/trpc/server";
 
 export const categoriesRouter = createTRPCRouter({
     // Get the default categories defined by the system
@@ -21,5 +23,25 @@ export const categoriesRouter = createTRPCRouter({
         return ctx.db.query.categories.findFirst({
             where: eq(categories.id, categoryId),
         });
+    }),
+
+    getUserCatgories: protectedProcedure.query(async ({ ctx }) => {
+        const userExpenses = await ctx.db.query.expenses.findMany({
+            with: {
+                categories: true,
+            },
+            where: eq(expenses.userId, ctx.session.user.id),
+        });
+
+        const categories: SelectCategory[] = [];
+
+        for (const exp of userExpenses) {
+            categories.push(exp.categories as SelectCategory);
+        }
+
+        // remove all duplicates
+        const uniqueCategories = new Map(categories.map((c) => [c.id, c]));
+
+        return uniqueCategories;
     }),
 });
