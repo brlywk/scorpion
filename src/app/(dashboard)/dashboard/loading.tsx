@@ -1,4 +1,4 @@
-import Loading from "~/app/_components/shared/loading";
+import Loading from "@/shared/loaders/loading";
 
 export default async function LoadingDashboard() {
     return <Loading />;

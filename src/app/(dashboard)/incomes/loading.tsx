@@ -1,5 +1,5 @@
 import Loading from "@/shared/loaders/loading";
 
-export default function LoadingExpensesPage() {
+export default function IncomesLoadingPage() {
     return <Loading />;
 }

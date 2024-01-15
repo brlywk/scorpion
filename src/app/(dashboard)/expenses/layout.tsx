@@ -1,5 +1,3 @@
-import ExpensesSubNavigation from "./_components/expenses-sub-navigation";
-
 export default async function ExpensesLayout({
     children,
 }: {
@@ -8,7 +6,7 @@ export default async function ExpensesLayout({
     return (
         <>
             <div className="relative flex flex-row gap-8">
-                <ExpensesSubNavigation />
+                {/* <ExpensesSubNavigation /> */}
                 <div className="w-full">{children}</div>
             </div>
         </>

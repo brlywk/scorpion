@@ -1,8 +1,7 @@
-import { getServerAuthSession } from "~/server/auth";
-import Footer from "../_components/partials/footer";
-import Header from "../_components/partials/header";
+import Footer from "@/partials/footer/footer";
+import Header from "@/partials/header/header";
 import { redirect } from "next/navigation";
-import NotificiationPopup from "../_components/shared/notification-popup";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function DashboardLayout({
     children,
@@ -18,9 +17,11 @@ export default async function DashboardLayout({
     return (
         <>
             <Header />
-            <main className="mx-auto max-w-screen-xl pt-14">{children}</main>
+            <main className="mx-auto mt-8 max-w-screen-xl px-2 md:px-4 2xl:px-0">
+                {children}
+            </main>
             <Footer />
-            <NotificiationPopup />
+            {/* <NotificiationPopup /> */}
         </>
     );
 }

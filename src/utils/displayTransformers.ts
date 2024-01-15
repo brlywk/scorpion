@@ -27,3 +27,25 @@ export function getCurrencySymbol(currency: Currency): string {
             return "Unknown currency.";
     }
 }
+
+/**
+ * Tries to shorten the given input to a two string intial.
+ *
+ * If that's not possible, take the first two letters...
+ */
+export function shortenToInitials(input: string): string {
+    if (!input || input.length < 2) return "";
+
+    let result = "";
+    const tokens = input.split(" ") ?? "";
+
+    // we cannot get initials, return the first two letters
+    if (tokens.length < 2) {
+        result = input.slice(0, 2);
+    } else {
+        result =
+            tokens[0]!.slice(0, 1) + tokens[tokens.length - 1]!.slice(0, 1);
+    }
+
+    return result.toUpperCase();
+}
